@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: erp
+    description: 'Fonte de dados do sistema ERP da Adventure Works, contendo informações detalhadas sobre vendas e transações comerciais.'
+    database: adventure_works
+    schema: sap_adw
+    tables:
+      - name: address
