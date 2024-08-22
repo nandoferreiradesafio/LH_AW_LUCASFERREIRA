@@ -7,3 +7,7 @@ sources:
     schema: sap_adw
     tables:
       - name: address
+      - name: businessentityaddress
+      - name: countryregion
+      - name: creditcard
+      - name: customer
