@@ -12,3 +12,15 @@ sources:
       - name: creditcard
       - name: customer
       - name: employee
+      - name: person
+      - name: product
+      - name: productcategory
+      - name: productsubcategory
+      - name: salesorderdetail
+      - name: salesorderheader
+      - name: salesorderheadersalesreason
+      - name: salesperson
+      - name: salesreason
+      - name: salesterritory
+      - name: stateprovince
+      - name: store
