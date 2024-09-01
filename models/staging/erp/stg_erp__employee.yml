@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: stg_erp__employee
+    description: 'Tabela que armazena informações sobre funcionários no sistema ERP.'
+    columns:
+      - name: fk_entidade_negocio
+        description: 'Chave estrangeira que referencia a entidade de negócio associada ao funcionário.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('businessentity')
+              field: businessentityid
+      - name: numero_identificacao_nacional
+        description: 'Número de identificação nacional do funcionário.'
+        tests:
+          - not_null
+          - unique
+      - name: genero
+        description: 'Gênero do funcionário.'
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['M', 'F']
+      - name: id_login
+        description: 'ID de login do funcionário no sistema.'
+        tests:
+          - not_null
+          - unique
+      - name: titulo_trabalho
+        description: 'Título do cargo do funcionário.'
+        tests:
+          - not_null
+      - name: estado_civil
+        description: 'Estado civil do funcionário.'
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['S', 'M', 'D', 'W']
+      - name: indicador_salario_fixo
+        description: 'Indica se o funcionário é assalariado.'
+        tests:
+          - not_null
+      - name: indicador_ativo
+        description: 'Indica se o funcionário está atualmente ativo na empresa.'
+        tests:
+          - not_null
+      - name: nodo_organizacional
+        description: 'Nodo organizacional ao qual o funcionário pertence.'
+      - name: horas_ferias
+        description: 'Horas de férias acumuladas pelo funcionário.'
+        tests:
+          - not_null
+      - name: horas_licenca_medica
+        description: 'Horas de licença médica acumuladas pelo funcionário.'
+        tests:
+          - not_null
+      - name: data_nascimento
+        description: 'Data de nascimento do funcionário.'
+        tests:
+          - not_null
+      - name: data_contratacao
+        description: 'Data de contratação do funcionário.'
+        tests:
+          - not_null
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do funcionário.'
+        tests:
+          - not_null

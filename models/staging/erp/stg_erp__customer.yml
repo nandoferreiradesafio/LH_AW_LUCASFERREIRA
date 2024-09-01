@@ -1,0 +1,19 @@
+version: 2
+
+models:
+  - name: stg_erp__customer
+    description: 'Tabela que armazena informações sobre clientes no sistema ERP.'
+    columns:
+      - name: pk_cliente
+        description: 'Chave primária que identifica unicamente o cliente.'
+        tests:
+          - unique
+          - not_null
+      - name: fk_pessoa
+        description: 'Chave estrangeira que referencia a tabela de pessoas.'
+      - name: fk_territorio
+        description: 'Chave estrangeira que referencia a tabela de territórios.'
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do cliente.'
+        tests:
+          - not_null

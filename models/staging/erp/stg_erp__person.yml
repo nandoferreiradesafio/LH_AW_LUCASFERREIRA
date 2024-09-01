@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: stg_erp__person
+    description: 'Tabela que armazena informações sobre pessoas no sistema ERP.'
+    columns:
+      - name: fk_entidade_negocio
+        description: 'Chave estrangeira que referencia a entidade de negócio associada à pessoa.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('businessentity')
+              field: businessentityid
+      - name: tipo_pessoa
+        description: 'Tipo de pessoa, indicando a função ou relação com a empresa.'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [
+                'Contato da loja',
+                'Cliente individual',
+                'Vendedor',
+                'Funcionário',
+                'Contato do fornecedor',
+                'Contato geral'
+              ]
+      - name: nome_estilo
+        description: 'Indica o estilo de formatação do nome (formal/informal).'
+        tests:
+          - not_null
+      - name: titulo
+        description: 'Título da pessoa (Sr., Sra., Dr., etc.).'
+      - name: nome_primeiro
+        description: 'Primeiro nome da pessoa.'
+        tests:
+          - not_null
+      - name: nome_do_meio
+        description: 'Nome do meio da pessoa.'
+      - name: nome_ultimo
+        description: 'Último nome da pessoa.'
+        tests:
+          - not_null
+      - name: sufixo
+        description: 'Sufixo do nome da pessoa (Jr., III, etc.).'
+      - name: promocao_email
+        description: 'Indicador de participação em promoções via email.'
+        tests:
+          - not_null
+      - name: informacao_contato_adicional
+        description: 'Informações adicionais de contato.'
+      - name: dados_demograficos
+        description: 'Dados demográficos da pessoa.'
+      - name: data_modificacao
+        description: 'Data da última modificação das informações da pessoa.'
+        tests:
+          - not_null

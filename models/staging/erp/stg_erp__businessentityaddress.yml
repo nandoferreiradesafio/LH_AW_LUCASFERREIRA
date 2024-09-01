@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_erp__businessentityaddress
+    description: 'Tabela que relaciona entidades de negócio com seus endereços no sistema ERP.'
+    columns:
+      - name: fk_entidade_negocio
+        description: 'Chave estrangeira que referencia a tabela de entidades de negócio.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('businessentity')
+              field: businessentityid
+      - name: fk_endereco
+        description: 'Chave estrangeira que referencia a tabela de endereços.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('address')
+              field: addressid
+      - name: fk_tipo_endereco
+        description: 'Chave estrangeira que referencia o tipo de endereço.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('addresstype')
+              field: addresstypeid
+      - name: data_modificacao
+        description: 'Data da última modificação do relacionamento entre entidade de negócio e endereço.'
+        tests:
+          - not_null

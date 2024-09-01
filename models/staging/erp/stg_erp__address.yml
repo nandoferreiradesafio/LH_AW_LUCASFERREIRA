@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: stg_erp__address
+    description: 'Tabela contendo informações de endereço no sistema ERP.'
+    columns:
+      - name: pk_endereco
+        description: 'Chave primária da tabela address.'
+        tests:
+          - unique
+          - not_null
+      - name: fk_estado_provincia
+        description: 'Chave estrangeira que referencia a tabela de estado/província.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stateprovince')
+              field: stateprovinceid
+      - name: endereco_primeiro
+        description: 'Primeira linha do endereço.'
+        tests:
+          - not_null
+      - name: endereco_segundo
+        description: 'Segunda linha do endereço.'
+      - name: nome_cidade
+        description: 'Nome da cidade do endereço.'
+        tests:
+          - not_null
+      - name: codigo_postal
+        description: 'Código postal do endereço.'
+        tests:
+          - not_null
+      - name: coordenada_geografica
+        description: 'Coordenadas geográficas do endereço.'
+      - name: data_modificacao
+        description: 'Data da última modificação do endereço.'
+        tests:
+          - not_null

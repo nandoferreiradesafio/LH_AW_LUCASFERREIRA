@@ -1,0 +1,46 @@
+version: 2
+
+models:
+  - name: stg_erp__salesterritory
+    description: 'Tabela que armazena informações sobre os territórios de venda no sistema ERP.'
+    columns:
+      - name: pk_territorio_venda
+        description: 'Chave primária que identifica unicamente o território de venda.'
+        tests:
+          - unique
+          - not_null
+      - name: nome_territorio
+        description: 'Nome do território de venda, traduzido para o português quando aplicável.'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [
+                'Austrália',
+                'Canadá',
+                'Alemanha',
+                'França',
+                'Reino Unido',
+                'Sudeste',
+                'Noroeste',
+                'Sudoeste',
+                'Central',
+                'Nordeste'
+              ]
+      - name: codigo_regiao_pais
+        description: 'Código da região ou país associado ao território de venda.'
+        tests:
+          - not_null
+      - name: grupo
+        description: 'Grupo ao qual o território de venda pertence.'
+      - name: vendas_ano_atual
+        description: 'Total de vendas realizadas no território no ano atual.'
+      - name: vendas_ano_anterior
+        description: 'Total de vendas realizadas no território no ano anterior.'
+      - name: custo_ano_atual
+        description: 'Custo total incorrido no território no ano atual.'
+      - name: custo_ano_anterior
+        description: 'Custo total incorrido no território no ano anterior.'
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do território de venda.'
+        tests:
+          - not_null
