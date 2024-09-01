@@ -1,9 +1,9 @@
 with
     salesorderheadersalesreason as (
         select
-            cast(salesorderid as int) as salesorderid 
-            , cast(salesreasonid as int) as salesreasonid
-            , cast(modifieddate as date) as modifieddate
+            cast(salesorderid as int) as fk_pedido_venda 
+            , cast(salesreasonid as int) as fk_motivo_venda
+            , cast(modifieddate as date) as data_modificacao
         from {{ source('erp', 'salesorderheadersalesreason') }}
     )
 select

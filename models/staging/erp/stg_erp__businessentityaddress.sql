@@ -1,10 +1,10 @@
 with
     businessentityaddress as (
         select
-            cast(businessentityid as int) as businessentityid
-            , cast(addressid as int) as addressid
-            , cast(addresstypeid as int) as addresstypeid
-            , cast(modifieddate as date) as modifieddate
+            cast(businessentityid as int) as fk_entidade_negocio
+            , cast(addressid as int) as fk_endereco
+            , cast(addresstypeid as int) as fk_tipo_endereco
+            , cast(modifieddate as date) as data_modificacao
         from {{ source('erp', 'businessentityaddress') }}
     )
 select

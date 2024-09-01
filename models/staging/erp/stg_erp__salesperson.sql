@@ -1,14 +1,14 @@
 with
     salesperson as (
         select
-            cast(businessentityid as int) as businessentityid 
-            , cast(territoryid as int) as territoryid
-            , cast(salesquota as int) as salesquota
+            cast(businessentityid as int) as fk_entidade_negocio 
+            , cast(territoryid as int) as fk_territorio
+            , cast(salesquota as int) as cota_vendas
             , cast(bonus as int) as bonus 
-            , cast(commissionpct as float) as commissionpct
-            , cast(salesytd as float) as salesytd
-            , cast(saleslastyear as float) as saleslastyear 
-            , cast(modifieddate as date) as modifieddate
+            , cast(commissionpct as float) as percentual_comissao
+            , cast(salesytd as float) as vendas_ano_atual
+            , cast(saleslastyear as float) as vendas_ano_anterior 
+            , cast(modifieddate as date) as data_modificacao
         from {{ source('erp', 'salesperson') }}
     )
 select

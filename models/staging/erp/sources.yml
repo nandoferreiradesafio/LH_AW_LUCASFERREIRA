@@ -7,20 +7,38 @@ sources:
     schema: sap_adw
     tables:
       - name: address
+        description: 'Tabela que armazena os endereços de entidades do sistema ERP.'
       - name: businessentityaddress
+        description: 'Tabela de relacionamento entre entidades de negócios e seus endereços.'
       - name: countryregion
+        description: 'Tabela que armazena os países e regiões no sistema ERP.'
       - name: creditcard
+        description: 'Tabela que armazena informações sobre cartões de crédito dos clientes.'
       - name: customer
+        description: 'Tabela que armazena informações sobre os clientes do sistema ERP.'
       - name: employee
+        description: 'Tabela que armazena informações sobre os funcionários do sistema ERP.'
       - name: person
+        description: 'Tabela que armazena informações detalhadas sobre as pessoas registradas no sistema ERP.'
       - name: product
+        description: 'Tabela que armazena informações detalhadas sobre os produtos do sistema ERP.'
       - name: productcategory
+        description: 'Tabela que armazena as categorias de produtos.'
       - name: productsubcategory
+        description: 'Tabela que armazena as subcategorias de produtos.'
       - name: salesorderdetail
+        description: 'Tabela que armazena detalhes dos itens em cada pedido de venda.'
       - name: salesorderheader
+        description: 'Tabela que armazena informações gerais sobre os pedidos de venda.'
       - name: salesorderheadersalesreason
+        description: 'Tabela que armazena as razões associadas a cada pedido de venda.'
       - name: salesperson
+        description: 'Tabela que armazena informações sobre os vendedores do sistema ERP.'
       - name: salesreason
+        description: 'Tabela que armazena as razões para vendas no sistema ERP.'
       - name: salesterritory
+        description: 'Tabela que armazena informações sobre os territórios de venda no sistema ERP.'
       - name: stateprovince
+        description: 'Tabela que armazena informações sobre os estados ou províncias no sistema ERP.'
       - name: store
+        description: 'Tabela que armazena informações sobre as lojas no sistema ERP.'

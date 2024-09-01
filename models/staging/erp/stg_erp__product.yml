@@ -1,0 +1,80 @@
+version: 2
+
+models:
+  - name: stg_erp__product
+    description: 'Tabela que armazena informações sobre produtos no sistema ERP.'
+    columns:
+      - name: pk_produto
+        description: 'Chave primária que identifica unicamente o produto.'
+        tests:
+          - unique
+          - not_null
+      - name: fk_subcategoria_produto
+        description: 'Chave estrangeira que referencia a subcategoria do produto.'
+      - name: fk_modelo_produto
+        description: 'Chave estrangeira que referencia o modelo do produto.'
+      - name: indicador_fabricacao
+        description: 'Indica se o produto é fabricado internamente.'
+        tests:
+          - not_null
+      - name: indicador_produto_acabado
+        description: 'Indica se o produto é um produto acabado.'
+        tests:
+          - not_null
+      - name: codigo_unidade_tamanho
+        description: 'Código da unidade de medida do tamanho do produto.'
+      - name: codigo_unidade_peso
+        description: 'Código da unidade de medida do peso do produto.'
+      - name: numero_produto
+        description: 'Número identificador do produto.'
+        tests:
+          - not_null
+          - unique
+      - name: nome_produto
+        description: 'Nome do produto.'
+        tests:
+          - not_null
+      - name: cor_produto
+        description: 'Cor do produto.'
+      - name: nivel_estoque_seguro
+        description: 'Nível mínimo de estoque para segurança.'
+        tests:
+          - not_null
+      - name: ponto_reposicao
+        description: 'Ponto de reposição do estoque do produto.'
+        tests:
+          - not_null
+      - name: custo_padrao
+        description: 'Custo padrão de fabricação do produto.'
+        tests:
+          - not_null
+      - name: preco_lista
+        description: 'Preço de lista do produto.'
+        tests:
+          - not_null
+      - name: tamanho_produto
+        description: 'Tamanho do produto.'
+      - name: peso_produto
+        description: 'Peso do produto.'
+      - name: linha_produto
+        description: 'Linha de produtos à qual o produto pertence.'
+      - name: classe_produto
+        description: 'Classe do produto.'
+      - name: estilo_produto
+        description: 'Estilo do produto.'
+      - name: dias_para_fabricar
+        description: 'Número de dias necessários para fabricar o produto.'
+        tests:
+          - not_null
+      - name: data_inicio_venda
+        description: 'Data de início das vendas do produto.'
+        tests:
+          - not_null
+      - name: data_fim_venda
+        description: 'Data de término das vendas do produto.'
+      - name: data_descontinuacao
+        description: 'Data de descontinuação do produto.'
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do produto.'
+        tests:
+          - not_null

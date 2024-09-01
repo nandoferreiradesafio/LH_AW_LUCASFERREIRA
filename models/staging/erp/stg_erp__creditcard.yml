@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_erp__creditcard
+    description: 'Tabela que armazena informações sobre cartões de crédito no sistema ERP.'
+    columns:
+      - name: pk_cartao_credito
+        description: 'Chave primária que identifica unicamente o cartão de crédito.'
+        tests:
+          - unique
+          - not_null
+      - name: tipo_cartao
+        description: 'Tipo do cartão de crédito (por exemplo, Visa, MasterCard).'
+        tests:
+          - not_null
+      - name: numero_cartao
+        description: 'Número do cartão de crédito.'
+        tests:
+          - not_null
+          - unique
+      - name: mes_expiracao
+        description: 'Mês de expiração do cartão de crédito.'
+        tests:
+          - not_null
+      - name: ano_expiracao
+        description: 'Ano de expiração do cartão de crédito.'
+        tests:
+          - not_null
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do cartão de crédito.'
+        tests:
+          - not_null

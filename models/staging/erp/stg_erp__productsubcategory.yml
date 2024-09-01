@@ -1,0 +1,66 @@
+version: 2
+
+models:
+  - name: stg_erp__productsubcategory
+    description: 'Tabela que armazena informações sobre subcategorias de produtos no sistema ERP.'
+    columns:
+      - name: pk_subcategoria_produto
+        description: 'Chave primária que identifica unicamente a subcategoria de produto.'
+        tests:
+          - unique
+          - not_null
+      - name: fk_categoria_produto
+        description: 'Chave estrangeira que referencia a categoria de produto associada.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('productcategory')
+              field: productcategoryid
+      - name: nome_subcategoria
+        description: 'Nome da subcategoria de produto.'
+        tests:
+          - not_null
+          - accepted_values:
+              values: [
+                'Bicicletas de montanha'
+                , 'Bicicletas de estrada'
+                , 'Bicicletas de turismo'
+                , 'Guidão'
+                , 'Colchetes Inferiores'
+                , 'Freios'
+                , 'Correntes'
+                , 'Pedaleiras'
+                , 'Desviadores'
+                , 'Garfos'
+                , 'Fones de ouvido'
+                , 'Quadros de montanha'
+                , 'Pedais'
+                , 'Quadros de estrada'
+                , 'Selas'
+                , 'Quadros de turismo'
+                , 'Rodas'
+                , 'Shorts'
+                , 'Cápsulas'
+                , 'Luvas'
+                , 'Camisas'
+                , 'Shorts'
+                , 'Meias'
+                , 'Meia-calça'
+                , 'Coletes'
+                , 'Bicicletários'
+                , 'Suportes para bicicletas'
+                , 'Garrafas e gaiolas'
+                , 'Limpadores'
+                , 'Pára-lamas'
+                , 'Capacetes'
+                , 'Pacotes de hidratação'
+                , 'Luzes'
+                , 'Fechaduras'
+                , 'Cestos'
+                , 'Bombas'
+                , 'Pneus e Câmaras de Ar'
+              ]
+      - name: data_modificacao
+        description: 'Data da última modificação das informações da subcategoria de produto.'
+        tests:
+          - not_null

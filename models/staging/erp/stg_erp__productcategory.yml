@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: stg_erp__productcategory
+    description: 'Tabela que armazena informações sobre categorias de produtos no sistema ERP.'
+    columns:
+      - name: pk_categoria_produto
+        description: 'Chave primária que identifica unicamente a categoria de produto.'
+        tests:
+          - unique
+          - not_null
+      - name: nome_categoria_produto
+        description: 'Nome da categoria de produto.'
+        tests:
+          - not_null
+          - unique
+          - accepted_values:
+              values: ['Bicicletas', 'Componentes', 'Roupas', 'Acessórios']
+      - name: data_modificacao
+        description: 'Data da última modificação das informações da categoria de produto.'
+        tests:
+          - not_null

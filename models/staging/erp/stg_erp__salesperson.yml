@@ -1,0 +1,33 @@
+version: 2
+
+models:
+  - name: stg_erp__salesperson
+    description: 'Tabela que armazena informações sobre vendedores no sistema ERP.'
+    columns:
+      - name: fk_entidade_negocio
+        description: 'Chave estrangeira que referencia a entidade de negócio associada ao vendedor.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('businessentity')
+              field: businessentityid
+      - name: fk_territorio
+        description: 'Chave estrangeira que referencia o território de vendas associado ao vendedor.'
+        tests:
+          - relationships:
+              to: ref('salesterritory')
+              field: territoryid
+      - name: cota_vendas
+        description: 'Meta de vendas estabelecida para o vendedor.'
+      - name: bonus
+        description: 'Bônus recebido pelo vendedor.'
+      - name: percentual_comissao
+        description: 'Percentual de comissão sobre as vendas do vendedor.'
+      - name: vendas_ano_atual
+        description: 'Total de vendas realizadas pelo vendedor no ano atual.'
+      - name: vendas_ano_anterior
+        description: 'Total de vendas realizadas pelo vendedor no ano anterior.'
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do vendedor.'
+        tests:
+          - not_null

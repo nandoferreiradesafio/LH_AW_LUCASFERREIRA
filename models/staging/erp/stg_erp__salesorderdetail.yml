@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: stg_erp__salesorderdetail
+    description: 'Tabela que armazena informações detalhadas sobre os itens de pedidos de venda no sistema ERP.'
+    columns:
+      - name: pk_detalhe_pedido_venda
+        description: 'Chave primária que identifica unicamente o detalhe do pedido de venda.'
+        tests:
+          - unique
+          - not_null
+      - name: fk_pedido_venda
+        description: 'Chave estrangeira que referencia o pedido de venda associado.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('salesorderheader')
+              field: salesorderid
+      - name: numero_rastreio_transportadora
+        description: 'Número de rastreamento da transportadora para o item do pedido de venda.'
+      - name: quantidade_pedido
+        description: 'Quantidade de itens no pedido de venda.'
+        tests:
+          - not_null
+      - name: fk_produto
+        description: 'Chave estrangeira que referencia o produto associado ao item do pedido de venda.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('product')
+              field: productid
+      - name: fk_oferta_especial
+        description: 'Chave estrangeira que referencia a oferta especial associada ao item do pedido de venda.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('specialoffer')
+              field: specialofferid
+      - name: preco_unitario
+        description: 'Preço unitário do produto no pedido de venda.'
+        tests:
+          - not_null
+      - name: desconto_preco_unitario
+        description: 'Desconto aplicado ao preço unitário do produto no pedido de venda.'
+        tests:
+          - not_null
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do detalhe do pedido de venda.'
+        tests:
+          - not_null

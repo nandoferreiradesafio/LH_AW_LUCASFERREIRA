@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: stg_erp__salesorderheadersalesreason
+    description: 'Tabela que armazena as razões associadas a cada pedido de venda no sistema ERP.'
+    columns:
+      - name: fk_pedido_venda
+        description: 'Chave estrangeira que referencia o pedido de venda associado.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('salesorderheader')
+              field: salesorderid
+      - name: fk_motivo_venda
+        description: 'Chave estrangeira que referencia o motivo da venda associado ao pedido.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('salesreason')
+              field: salesreasonid
+      - name: data_modificacao
+        description: 'Data da última modificação das informações da razão associada ao pedido de venda.'
+        tests:
+          - not_null

@@ -1,0 +1,39 @@
+version: 2
+
+models:
+  - name: stg_erp__stateprovince
+    description: 'Tabela que armazena informações sobre estados ou províncias no sistema ERP.'
+    columns:
+      - name: pk_estado_provincia
+        description: 'Chave primária que identifica unicamente o estado ou província.'
+        tests:
+          - unique
+          - not_null
+      - name: codigo_estado_provincia
+        description: 'Código que identifica o estado ou província.'
+        tests:
+          - not_null
+          - unique
+      - name: codigo_regiao_pais
+        description: 'Código da região ou país associado ao estado ou província.'
+        tests:
+          - not_null
+      - name: indicador_estado_provincia_unico
+        description: 'Indica se é o único estado ou província para a região ou país.'
+        tests:
+          - not_null
+      - name: nome_estado_provincia
+        description: 'Nome do estado ou província.'
+        tests:
+          - not_null
+      - name: fk_territorio
+        description: 'Chave estrangeira que referencia o território associado ao estado ou província.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('salesterritory')
+              field: territoryid
+      - name: data_modificacao
+        description: 'Data da última modificação das informações do estado ou província.'
+        tests:
+          - not_null

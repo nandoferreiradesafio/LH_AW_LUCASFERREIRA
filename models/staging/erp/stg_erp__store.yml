@@ -1,0 +1,27 @@
+version: 2
+
+models:
+  - name: stg_erp__store
+    description: 'Tabela que armazena informações sobre as lojas no sistema ERP.'
+    columns:
+      - name: fk_entidade_negocio
+        description: 'Chave estrangeira que referencia a entidade de negócio associada à loja.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('businessentity')
+              field: businessentityid
+      - name: nome_loja
+        description: 'Nome da loja.'
+        tests:
+          - not_null
+      - name: fk_vendedor
+        description: 'Chave estrangeira que referencia o vendedor associado à loja.'
+        tests:
+          - not_null
+      - name: dados_demograficos
+        description: 'Dados demográficos associados à loja.'
+      - name: data_modificacao
+        description: 'Data da última modificação das informações da loja.'
+        tests:
+          - not_null
