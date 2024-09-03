@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: dim_products
+    description: 'Dimensão que armazena informações transformadas sobre produtos a partir de dados de pedidos de venda, produtos, categorias e subcategorias de produtos.'
+    columns:
+      - name: fk_produto
+        description: 'Chave estrangeira que referencia o produto associado ao pedido de venda.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_erp__product')
+              field: pk_produto
+      - name: fk_subcategoria_produto
+        description: 'Chave estrangeira que referencia a subcategoria do produto.'
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_erp__productsubcategory')
+              field: pk_subcategoria_produto
+      - name: nome_produto
+        description: 'Nome do produto.'
+        tests:
+          - not_null
+      - name: nome_categoria_produto
+        description: 'Nome da categoria à qual o produto pertence.'
+        tests:
+          - not_null
+      - name: nome_subcategoria
+        description: 'Nome da subcategoria à qual o produto pertence.'
+        tests:
+          - not_null
+      - name: sk_products
+        description: 'Chave substituta (surrogate key) gerada para a dimensão do produto.'
+        tests:
+          - unique
+          - not_null
