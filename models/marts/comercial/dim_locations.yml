@@ -2,77 +2,33 @@ version: 2
 
 models:
   - name: dim_locations
-    description: 'Dimensão que armazena informações transformadas sobre localizações a partir de dados de endereços, territórios de vendas, estados/províncias e pedidos de venda.'
+    description: 'Dimensão que armazena informações sobre as localizações associadas aos endereços de faturamento dos pedidos, incluindo país, estado/província e cidade.'
     columns:
-      - name: codigo_regiao_pais
-        description: 'Código da região ou país associado à localização.'
+      - name: sk_location
+        description: 'Chave substituta (surrogate key) gerada para identificar unicamente cada localização com base no endereço de faturamento.'
         tests:
+          - unique
           - not_null
-          - relationships:
-              to: ref('stg_erp__countryregion')
-              field: codigo_regiao_pais
-      - name: nome_regiao_pais
-        description: 'Nome da região ou país associado à localização.'
-        tests:
-          - not_null
-      - name: fk_entidade_negocio
-        description: 'Chave estrangeira que referencia a entidade de negócio associada ao endereço.'
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_erp__businessentityaddress')
-              field: fk_entidade_negocio
-      - name: fk_endereco
-        description: 'Chave estrangeira que referencia o endereço associado à entidade de negócio.'
+
+      - name: fk_endereco_faturamento
+        description: 'Chave estrangeira que referencia o endereço de faturamento do pedido.'
         tests:
           - not_null
           - relationships:
               to: ref('stg_erp__address')
               field: pk_endereco
-      - name: fk_tipo_endereco
-        description: 'Chave estrangeira que referencia o tipo de endereço associado à entidade de negócio.'
+
+      - name: nome_regiao_pais
+        description: 'Nome da região ou país relacionado ao endereço de faturamento.'
         tests:
           - not_null
-      - name: endereco_primeiro
-        description: 'Primeira linha do endereço.'
-        tests:
-          - not_null
+
       - name: nome_cidade
-        description: 'Nome da cidade associada ao endereço.'
+        description: 'Nome da cidade relacionada ao endereço de faturamento.'
         tests:
           - not_null
-      - name: pk_territorio_venda
-        description: 'Chave primária que identifica o território de venda associado à localização.'
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_erp__salesterritory')
-              field: pk_territorio_venda
-      - name: nome_territorio
-        description: 'Nome do território de venda associado à localização.'
-      - name: pk_estado_provincia
-        description: 'Chave primária que identifica o estado ou província associado ao endereço.'
-        tests:
-          - not_null
-          - relationships:
-              to: ref('stg_erp__stateprovince')
-              field: pk_estado_provincia
-      - name: codigo_estado_provincia
-        description: 'Código do estado ou província associado ao endereço.'
-        tests:
-          - not_null
+
       - name: nome_estado_provincia
-        description: 'Nome do estado ou província associado ao endereço.'
-      - name: fk_endereco_faturamento
-        description: 'Chave estrangeira que referencia o endereço de faturamento associado ao pedido de venda.'
+        description: 'Nome do estado ou província relacionado ao endereço de faturamento.'
         tests:
-          - not_null
-      - name: fk_territorio
-        description: 'Chave estrangeira que referencia o território associado ao pedido de venda.'
-        tests:
-          - not_null
-      - name: sk_location
-        description: 'Chave substituta (surrogate key) gerada para a dimensão de localização.'
-        tests:
-          - unique
           - not_null

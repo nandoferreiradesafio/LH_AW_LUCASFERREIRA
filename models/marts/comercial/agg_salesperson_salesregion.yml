@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: agg_salesperson_salesregion
+    description: "Modelo que agrega os dados de vendas, funcionários, e região para calcular total de vendas e receitas."
+    columns:
+      - name: nome_regiao_pais
+        description: "Nome da região do país associada ao pedido de venda."
+      - name: nome_completo
+        description: "Nome completo do vendedor associado ao pedido de venda."
+      - name: titulo_trabalho
+        description: "Título do trabalho do funcionário (vendedor)."
+      - name: indicador_ativo
+        description: "Indica se o funcionário (vendedor) está ativo ou inativo."
+      - name: total_vendas
+        description: "Número total de vendas associadas ao vendedor e região."
+      - name: total_receita_bruta
+        description: "Total da receita bruta gerada pelas vendas (sem descontos aplicados)."
+      - name: total_receita
+        description: "Total da receita líquida gerada pelas vendas, considerando os descontos aplicados."
