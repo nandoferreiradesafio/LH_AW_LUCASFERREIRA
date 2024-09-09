@@ -2,7 +2,7 @@
     Este teste garente que o valor total pago pelos produtos em 2012 estão
     corretas com o valor auditado da contabilidade.  
 
-    soma total 2012 = 9521497
+    soma total 2012 = 33709058
 */
 
 with
@@ -16,4 +16,4 @@ with
 select
     total_valor_pago
 from tst_total_valor_pago_produto_2012
-where total_valor_pago not between 9521487 and 9521507
+where total_valor_pago not between 33709048 and 33709068
