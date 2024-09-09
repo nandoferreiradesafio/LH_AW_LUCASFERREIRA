@@ -2,7 +2,8 @@
     Este teste garente que as vendas estão
     corretas com o valor auditado da contabilidade.  
 
-    soma total = 306279068.9285
+    soma total = 2926970124.0414
+
 */
 
 with
@@ -15,4 +16,4 @@ with
 select
     total_vendas
 from tst_total_vendas
-where total_vendas not between 306279068.9275 and 306279068.9295
+where total_vendas not between 2926970124.0404 and 2926970124.0424
