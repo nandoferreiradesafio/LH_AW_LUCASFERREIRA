@@ -2,19 +2,29 @@ version: 2
 
 models:
   - name: agg_salesperson_salesregion
-    description: "Modelo que agrega os dados de vendas, funcionários, e região para calcular total de vendas e receitas."
+    description: "Modelo que agrega dados de clientes, produtos, pedidos e informações geográficas para análises no Data Warehouse."
     columns:
-      - name: nome_regiao_pais
-        description: "Nome da região do país associada ao pedido de venda."
+      - name: pais
+        description: "Nome do país onde o pedido foi realizado."
+      - name: estado
+        description: "Nome do estado onde o pedido foi realizado."
+      - name: cidade
+        description: "Nome da cidade onde o pedido foi realizado."
       - name: nome_completo
-        description: "Nome completo do vendedor associado ao pedido de venda."
-      - name: titulo_trabalho
-        description: "Título do trabalho do funcionário (vendedor)."
-      - name: indicador_ativo
-        description: "Indica se o funcionário (vendedor) está ativo ou inativo."
-      - name: total_vendas
-        description: "Número total de vendas associadas ao vendedor e região."
-      - name: total_receita_bruta
-        description: "Total da receita bruta gerada pelas vendas (sem descontos aplicados)."
-      - name: total_receita
-        description: "Total da receita líquida gerada pelas vendas, considerando os descontos aplicados."
+        description: "Nome completo do cliente que realizou o pedido."
+      - name: nome_loja
+        description: "Nome da loja associada ao cliente; se não informado, apresenta 'Nao Informado'."
+      - name: produto
+        description: "Nome do produto vendido."
+      - name: categoria_produto
+        description: "Categoria à qual o produto pertence."
+      - name: subcategoria_produto
+        description: "Subcategoria à qual o produto pertence."
+      - name: numero_produto
+        description: "Código único identificador do produto."
+      - name: quantidade_pedido
+        description: "Quantidade do produto solicitada no pedido."
+      - name: preco_unitario
+        description: "Preço unitário do produto no momento da venda."
+      - name: data_pedido
+        description: "Data em que o pedido foi realizado."
