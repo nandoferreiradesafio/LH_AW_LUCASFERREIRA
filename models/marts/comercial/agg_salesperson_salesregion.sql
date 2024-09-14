@@ -1,94 +1,175 @@
 with
-    stg_erp__salesorderheader as (
+    pais as (
+        select 
+            codigo_regiao_pais
+            , nome_regiao_pais as pais
+        from {{ ref('stg_erp__countryregion') }}
+    )
+
+    , estado as (
         select
-            pk_pedido_venda
-            , fk_vendedor
-            , fk_territorio
-            , total_pagar
+            pk_estado_provincia
+            , codigo_regiao_pais
+            , nome_estado_provincia as estado
+        from {{ ref('stg_erp__stateprovince') }}
+    )
+
+    , cidade as (
+        select
+            pk_endereco
+            , fk_estado_provincia
+            , nome_cidade as cidade
+        from {{ ref('stg_erp__address') }}
+    )
+
+    , info_pedidos as (
+        select
+            fk_endereco_faturamento
+            , pk_pedido_venda
+            , fk_endereco_envio
+            , fk_cliente
+            , data_pedido
         from {{ ref('stg_erp__salesorderheader') }}
     )
 
-    , stg_erp__salesorderdetail as (
+    , join_enderecos as (
         select
-            fk_pedido_venda
-            , quantidade_pedido * (preco_unitario - desconto_preco_unitario) as valor_pago_produto
-        from {{ ref('stg_erp__salesorderdetail') }}
+            info_pedidos.fk_endereco_faturamento
+            , pais.pais
+            , estado.estado
+            , cidade.cidade
+        from info_pedidos
+        left join cidade
+            on info_pedidos.fk_endereco_envio = cidade.pk_endereco
+        left join estado
+            on estado.pk_estado_provincia = cidade.fk_estado_provincia
+        left join pais
+            on pais.codigo_regiao_pais = estado.codigo_regiao_pais
     )
 
-    , stg_erp__person as (
+    , cliente as (
+        select
+            pk_cliente
+            , fk_pessoa
+            , fk_loja
+        from {{ ref('stg_erp__customer') }}
+    )
+
+    , loja as (
         select
             fk_entidade_negocio
             , case
-                when nome_do_meio is null then (nome_primeiro || ' ' || nome_ultimo)
-                else (nome_primeiro || ' ' || nome_do_meio || ' ' || nome_ultimo) 
+                when nome_loja is null or trim(nome_loja) = '' then 'Nao Informado'
+                else nome_loja
+            end as nome_loja
+        from {{ ref('stg_erp__store') }}
+    )
+
+    , pessoa as (
+        select
+            fk_entidade_negocio
+            , case
+                when nome_do_meio is null then (
+                    nome_primeiro || ' ' || nome_ultimo
+                )
+                else (
+                    nome_primeiro || ' ' || nome_do_meio || ' ' || nome_ultimo
+                ) 
             end as nome_completo
         from {{ ref('stg_erp__person') }}
     )
 
-    , stg_erp__employee as (
+    , join_cliente as (
         select
-            fk_entidade_negocio
-            , titulo_trabalho
-            , case
-                when indicador_ativo = True then 'Ativo'
-                else 'Inativo'
-            end as indicador_ativo
-        from {{ ref('stg_erp__employee') }}
+            cliente.pk_cliente
+            , cliente.fk_pessoa
+            , cliente.fk_loja
+            , loja.fk_entidade_negocio
+            , info_pedidos.fk_endereco_faturamento
+            , info_pedidos.pk_pedido_venda
+            , coalesce(loja.nome_loja, 'Nao Informado') as nome_loja
+            , pessoa.nome_completo
+            , info_pedidos.data_pedido
+        from info_pedidos
+        left join cliente
+            on cliente.pk_cliente = info_pedidos.fk_cliente
+        left join loja
+            on loja.fk_entidade_negocio = cliente.fk_loja
+        left join pessoa
+            on pessoa.fk_entidade_negocio = cliente.fk_pessoa
     )
 
-    , stg_erp__salesterritory as (
+    , produto as (
         select
-            pk_territorio_venda
-            , codigo_regiao_pais
-        from {{ ref('stg_erp__salesterritory') }}
+            pk_produto
+            , fk_subcategoria_produto
+            , numero_produto
+            , nome_produto as produto
+        from {{ ref('stg_erp__product') }}
     )
 
-    , stg_erp__countryregion as (
+    , categoria_produto as (
         select
-            codigo_regiao_pais
-            , nome_regiao_pais
-        from {{ ref('stg_erp__countryregion') }}
+            pk_categoria_produto
+            , nome_categoria_produto as categoria_produto
+        from {{ ref('stg_erp__productcategory') }}
     )
 
-    , transformed_data as (
-        select 
-            stg_erp__salesorderheader.pk_pedido_venda
-            , stg_erp__salesorderheader.total_pagar
-            , stg_erp__salesorderdetail.valor_pago_produto
-            , stg_erp__person.nome_completo
-            , stg_erp__employee.titulo_trabalho
-            , stg_erp__employee.indicador_ativo
-            , stg_erp__countryregion.nome_regiao_pais
-        from stg_erp__salesorderheader
-        left join stg_erp__salesorderdetail
-            on  stg_erp__salesorderdetail.fk_pedido_venda = stg_erp__salesorderheader.pk_pedido_venda
-        left join stg_erp__person
-            on stg_erp__person.fk_entidade_negocio = stg_erp__salesorderheader.fk_vendedor
-        left join stg_erp__employee
-            on stg_erp__employee.fk_entidade_negocio = stg_erp__person.fk_entidade_negocio
-        left join stg_erp__salesterritory
-            on stg_erp__salesterritory.pk_territorio_venda = stg_erp__salesorderheader.fk_territorio
-        left join stg_erp__countryregion
-            on stg_erp__countryregion.codigo_regiao_pais = stg_erp__salesterritory.codigo_regiao_pais
+    , subcategoria_produto as (
+        select
+            pk_subcategoria_produto
+            , fk_categoria_produto
+            , nome_subcategoria as subcategoria_produto
+        from {{ ref('stg_erp__productsubcategory') }}
     )
 
-    , transformed_data_aggregated as (
+    , join_produtos as (
         select
-            nome_regiao_pais
+            produto.pk_produto
+            , categoria_produto.pk_categoria_produto
+            , subcategoria_produto.pk_subcategoria_produto
+            , produto.numero_produto
+            , produto.produto
+            , categoria_produto.categoria_produto
+            , subcategoria_produto.subcategoria_produto
+        from produto
+        left join subcategoria_produto
+            on subcategoria_produto.pk_subcategoria_produto = produto.fk_subcategoria_produto
+        left join categoria_produto
+            on categoria_produto.pk_categoria_produto = subcategoria_produto.fk_categoria_produto
+    )
+
+    , detalhes_pedidos as (
+        select
+            fk_produto
+            , pk_detalhe_pedido_venda
+            , fk_pedido_venda
+            , quantidade_pedido
+            , preco_unitario
+        from {{ ref('stg_erp__salesorderdetail') }}
+    )
+
+	, transformed_data_aggregated as (
+        select
+            pais
+            , estado
+            , cidade
             , nome_completo
-            , titulo_trabalho
-            , indicador_ativo
-            , count(pk_pedido_venda) as total_vendas
-            , round(sum(total_pagar), 2) as total_receita_bruta
-            , sum(valor_pago_produto) as total_receita
-        from transformed_data
-        group by
-            nome_regiao_pais
-            , nome_completo
-            , titulo_trabalho
-            , indicador_ativo
-        order by
-            total_vendas desc
+            , nome_loja
+            , produto
+            , categoria_produto
+            , subcategoria_produto
+            , numero_produto
+            , quantidade_pedido
+            , preco_unitario
+            , data_pedido
+        from join_cliente
+        left join join_enderecos
+            on join_enderecos.fk_endereco_faturamento = join_cliente.fk_endereco_faturamento
+        left join detalhes_pedidos
+            on detalhes_pedidos.fk_pedido_venda = join_cliente.pk_pedido_venda
+        left join join_produtos
+            on join_produtos.pk_produto = detalhes_pedidos.fk_produto
     )
 
 select
